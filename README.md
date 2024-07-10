@@ -1,2 +1,2 @@
 # course-reg
-For Rutgers demo
+Rutgers full stack demo

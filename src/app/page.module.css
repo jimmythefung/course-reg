@@ -1,0 +1,12 @@
+.main {
+    /* border: 1px solid black; */
+    background-color: grey;
+}
+
+.message {
+    color: white;
+    font-size: xx-large;
+    width: fit-content;
+    padding: 5rem;
+    margin: 0 auto;
+}
