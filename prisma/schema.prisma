@@ -10,18 +10,33 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model User {
-    id    Int     @id @default(autoincrement())
-    email String  @unique
-    name  String?
-    posts Post[]
+model Student {
+    id             Int          @id @default(autoincrement())
+    studentid      Int          @unique
+    name           String
+    major          String?
+    declareded     Boolean      @default(false)
+    graduationdate DateTime
+    updatedAt      DateTime     @updatedAt
+    enrollments    Enrollment[]
 }
 
-model Post {
-    id        Int     @id @default(autoincrement())
-    title     String
-    content   String?
-    published Boolean @default(false)
-    author    User    @relation(fields: [authorId], references: [id])
-    authorId  Int
+model Class {
+    id          Int          @id @default(autoincrement())
+    code        String
+    subject     String
+    capacity    Int
+    term        String
+    year        Int
+    enrollments Enrollment[]
+}
+
+model Enrollment {
+    id        Int      @id @default(autoincrement())
+    updatedAt DateTime @updatedAt
+
+    Student   Student? @relation(fields: [studentId], references: [id])
+    studentId Int?
+    Class     Class?   @relation(fields: [classId], references: [id])
+    classId   Int?
 }
