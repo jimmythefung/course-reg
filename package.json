@@ -1,22 +1,26 @@
 {
-  "name": "course-reg",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@prisma/client": "^5.16.2",
-    "next": "14.2.4",
-    "react": "^18",
-    "react-dom": "^18"
-  },
-  "devDependencies": {
-    "eslint": "^8",
-    "eslint-config-next": "14.2.4",
-    "prisma": "^5.16.2"
-  }
+    "name": "course-reg",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@prisma/client": "^5.16.2",
+        "next": "14.2.4",
+        "react": "^18",
+        "react-dom": "^18"
+    },
+    "devDependencies": {
+        "eslint": "^8",
+        "eslint-config-next": "14.2.4",
+        "prisma": "^5.16.2"
+    },
+    "prisma": {
+        "seed": "node prisma/seed.js"
+    }
 }

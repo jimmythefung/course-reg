@@ -5,3 +5,4 @@ Rutgers full stack demo
 ## Prisma
   * `npx prisma db push`  
   * `npx prisma studio`
+  * `npx prisma db seed`
