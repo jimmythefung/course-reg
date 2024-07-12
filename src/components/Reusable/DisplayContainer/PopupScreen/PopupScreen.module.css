@@ -1,0 +1,60 @@
+.PopupScreen {
+    position: fixed;
+    z-index: 2000;
+    height: 100%;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}
+
+.viewframe {
+    background-color: grey;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+}
+
+@media (min-width: 40rem) {
+    .viewframe {
+        width: 40rem;
+    }
+}
+
+.content {
+    /* flex: 9; */
+}
+
+.closebtn {
+    border: 1px solid white;
+    border-radius: 1rem;
+    width: 10rem;
+    height: 5rem;
+    color: white;
+    text-align: center;
+    align-content: center;
+    margin: 1rem auto;
+}
+
+.closebtn:hover {
+    background-color: darkgoldenrod;
+    cursor: pointer;
+}
+
+.show {
+    display: flex;
+    animation: slidein 100ms ease-in;
+}
+
+.hide {
+    display: none;
+}
+
+@keyframes slidein {
+    from {
+        transform: translateY(50vh);
+    }
+    to {
+        transform: translateY(0);
+    }
+}

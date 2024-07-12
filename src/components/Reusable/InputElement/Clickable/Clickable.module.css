@@ -1,0 +1,35 @@
+.clickable {
+    border: 1px solid grey;
+    padding: 0.45rem;
+    width: fit-content;
+    margin-left: 0.2rem;
+}
+
+@media (min-width: 40rem) {
+    .clickable {
+        margin-left: 0.3rem;
+        padding: 1rem;
+    }
+}
+
+.clickable:hover {
+    background-color: grey;
+    cursor: pointer;
+}
+
+.isActive {
+    background-color: green;
+}
+
+/* Color for different types of activities */
+.bg_orange {
+    background-color: darkorange;
+}
+
+.bg_gray {
+    background-color: gray;
+}
+
+.bg_purple {
+    background-color: darkviolet;
+}

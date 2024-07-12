@@ -1,0 +1,16 @@
+.modifiabletext {
+    display: flex;
+    flex-direction: row;
+}
+
+.modifiabletext > label {
+    align-content: center;
+}
+
+.modifiabletext_input {
+    font-size: large;
+}
+
+.modifiabletext_submitbutton {
+    font-size: large;
+}

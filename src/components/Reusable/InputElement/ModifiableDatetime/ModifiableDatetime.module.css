@@ -1,0 +1,27 @@
+.modifiabledatetime {
+    display: flex;
+    flex-direction: row;
+}
+
+.modifiabledatetime > label {
+}
+
+.time_display {
+    width: 7.5rem;
+    font-size: 1rem;
+}
+
+.date_display {
+    width: 8rem;
+    font-size: 1rem;
+}
+
+.datetime_display {
+    width: 17rem;
+    font-size: 1rem;
+}
+
+.now_button {
+    width: fit-content;
+    margin-left: 0.2rem;
+}

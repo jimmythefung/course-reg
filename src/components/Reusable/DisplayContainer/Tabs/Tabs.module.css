@@ -1,0 +1,41 @@
+.tab_frame {
+    width: 100%;
+}
+
+.tab_bar {
+    display: flex;
+    flex-direction: row;
+    /* position: sticky; */
+    /* background-color: black; */
+    /* top: 0; */
+    /* z-index: 0; */
+    overflow: auto;
+    text-align: center;
+}
+
+.tabbutton {
+    flex: 1;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 1.2rem;
+    color: white;
+}
+
+.tab_bar button:hover {
+    background-color: yellowgreen;
+}
+
+.active {
+    border-bottom: 3px solid yellowgreen;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+    margin: 0 1rem;
+}

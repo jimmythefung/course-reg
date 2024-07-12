@@ -1,0 +1,22 @@
+.editablekvform {
+}
+
+.updateButton {
+    margin: 0.5rem auto;
+    padding: 0.5rem;
+}
+
+.kv_pair {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.k_field {
+    flex: 1;
+    margin-bottom: 0.2rem;
+}
+
+.v_field {
+    flex: 1;
+}
