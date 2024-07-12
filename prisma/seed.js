@@ -32,7 +32,7 @@ async function main() {
                     {
                         class: {
                             connect: {
-                                id: 2,
+                                code: "01:640:491",
                             },
                         },
                     },
@@ -40,15 +40,6 @@ async function main() {
             },
         },
     });
-
-    // // Enrollment
-    // const e1 = await prisma.enrollment.upsert({
-    //     where: { studentId: 1, classId: 1 },
-    //     update: {},
-    //     create: {
-    //         grade: "A",
-    //     },
-    // });
 
     console.log({ s1, c1 });
 }
