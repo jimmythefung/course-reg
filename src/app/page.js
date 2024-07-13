@@ -3,65 +3,17 @@ import styles from "./page.module.css";
 import { useState, useEffect, useRef } from "react";
 import EditableKVForm from "@/components/Reusable/DisplayContainer/EditableKVForm/EditableKVForm";
 import SortableTable from "@/components/Reusable/DisplayContainer/SortableTable/SortableTable";
+import {
+    class_columns,
+    student_columns,
+    enrollment_columns,
+} from "./libs/columns_config";
 
 export default function Home() {
     const [studentsData, setStudents] = useState(null);
     const [classesData, setClasses] = useState(null);
+    const [enrollmentsData, setEnrollment] = useState(null);
     const [isLoading, setLoading] = useState(true);
-
-    const student_columns = [
-        {
-            label: "Name",
-            accessor: "name",
-            sortable: true,
-            sortbyOrder: "desc",
-        },
-        {
-            label: "NetID",
-            accessor: "studentid",
-            sortable: true,
-            sortbyOrder: "desc",
-        },
-        {
-            label: "Major",
-            accessor: "major",
-            sortable: true,
-            sortbyOrder: "desc",
-        },
-        {
-            label: "Graduation",
-            accessor: "graduation",
-            sortable: true,
-            sortbyOrder: "desc",
-        },
-    ];
-
-    const class_columns = [
-        {
-            label: "Code",
-            accessor: "code",
-            sortable: true,
-            sortbyOrder: "desc",
-        },
-        {
-            label: "Name",
-            accessor: "name",
-            sortable: true,
-            sortbyOrder: "desc",
-        },
-        {
-            label: "Subject",
-            accessor: "subject",
-            sortable: true,
-            sortbyOrder: "desc",
-        },
-        {
-            label: "Term",
-            accessor: "term",
-            sortable: true,
-            sortbyOrder: "desc",
-        },
-    ];
 
     useEffect(() => {
         fetch("/api/v1/student")
@@ -71,8 +23,13 @@ export default function Home() {
             });
         fetch("/api/v1/class")
             .then((res) => res.json())
-            .then((classes) => {
-                setClasses(classes);
+            .then((data) => {
+                setClasses(data);
+            });
+        fetch("/api/v1/enrollment")
+            .then((res) => res.json())
+            .then((data) => {
+                setEnrollment(data);
                 setLoading(false);
             });
     }, []);
@@ -91,6 +48,11 @@ export default function Home() {
                 caption={"List of classes"}
                 data={classesData}
                 columns={class_columns}
+            />
+            <SortableTable
+                caption={"List of enrollment"}
+                data={enrollmentsData}
+                columns={enrollment_columns}
             />
         </main>
     );
