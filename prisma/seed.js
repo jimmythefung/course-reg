@@ -48,13 +48,13 @@ const list_of_students = [
         graduation: "2024-05-20T00:00:00.000Z",
     },
     {
-        studentid: "ba2025",
+        studentid: "bb2025",
         name: "Bob",
         major: "Biology",
         graduation: "2024-05-20T00:00:00.000Z",
     },
     {
-        studentid: "jd2026",
+        studentid: "jj2026",
         name: "Jane",
         major: "Journalism",
         graduation: "2024-05-20T00:00:00.000Z",
@@ -104,7 +104,7 @@ async function main() {
             studentid: "jf1128",
             name: "Jimmy",
             major: "Physics",
-            graduation: "2024-05-25T12:01:30.543Z",
+            graduation: "2024-05-20T00:00:00.000Z",
             enrollments: {
                 create: [
                     {

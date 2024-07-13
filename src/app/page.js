@@ -2,11 +2,66 @@
 import styles from "./page.module.css";
 import { useState, useEffect, useRef } from "react";
 import EditableKVForm from "@/components/Reusable/DisplayContainer/EditableKVForm/EditableKVForm";
+import SortableTable from "@/components/Reusable/DisplayContainer/SortableTable/SortableTable";
 
 export default function Home() {
-    const [students, setStudents] = useState(null);
-    const [classes, setClasses] = useState(null);
+    const [studentsData, setStudents] = useState(null);
+    const [classesData, setClasses] = useState(null);
     const [isLoading, setLoading] = useState(true);
+
+    const student_columns = [
+        {
+            label: "Name",
+            accessor: "name",
+            sortable: true,
+            sortbyOrder: "desc",
+        },
+        {
+            label: "NetID",
+            accessor: "studentid",
+            sortable: true,
+            sortbyOrder: "desc",
+        },
+        {
+            label: "Major",
+            accessor: "major",
+            sortable: true,
+            sortbyOrder: "desc",
+        },
+        {
+            label: "Graduation",
+            accessor: "graduation",
+            sortable: true,
+            sortbyOrder: "desc",
+        },
+    ];
+
+    const class_columns = [
+        {
+            label: "Code",
+            accessor: "code",
+            sortable: true,
+            sortbyOrder: "desc",
+        },
+        {
+            label: "Name",
+            accessor: "name",
+            sortable: true,
+            sortbyOrder: "desc",
+        },
+        {
+            label: "Subject",
+            accessor: "subject",
+            sortable: true,
+            sortbyOrder: "desc",
+        },
+        {
+            label: "Term",
+            accessor: "term",
+            sortable: true,
+            sortbyOrder: "desc",
+        },
+    ];
 
     useEffect(() => {
         fetch("/api/v1/student")
@@ -23,23 +78,20 @@ export default function Home() {
     }, []);
 
     if (isLoading) return <p>Loading...</p>;
-    if (!students) return <p>No student data</p>;
+    if (!studentsData) return <p>No student data</p>;
 
     return (
         <main className={styles.main}>
-            <h2>Students</h2>
-            <div className={styles.student_table}>
-                {students.map((s, ind) => {
-                    return <EditableKVForm kvData={s} />;
-                })}
-            </div>
-
-            <h2>Classes</h2>
-            <div className={styles.class_table}>
-                {classes.map((c, ind) => {
-                    return <EditableKVForm kvData={c} />;
-                })}
-            </div>
+            <SortableTable
+                caption={"List of students"}
+                data={studentsData}
+                columns={student_columns}
+            />
+            <SortableTable
+                caption={"List of classes"}
+                data={classesData}
+                columns={class_columns}
+            />
         </main>
     );
 }
