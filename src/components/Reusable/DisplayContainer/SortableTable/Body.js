@@ -31,9 +31,10 @@ export default function Body({ columns, tableData, setTableData }) {
                             return (
                                 <td
                                     key={accessor}
-                                    onClick={() =>
-                                        setEditCell({ id: data.id, accessor })
-                                    }
+                                    onClick={() => {
+                                        console.log({ id: data.id, accessor });
+                                        setEditCell({ id: data.id, accessor });
+                                    }}
                                 >
                                     {isEditing ? (
                                         <input

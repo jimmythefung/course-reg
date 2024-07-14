@@ -31,6 +31,7 @@ export default function Home() {
             .then((data) => {
                 const extractedData = data.map((x) => {
                     return {
+                        id: Number(x.student_id) + "_" + Number(x.class_id),
                         student_id: x.student_id,
                         class_id: x.class_id,
                         grade: x.grade ? x.grade : "TBD",
