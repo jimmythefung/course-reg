@@ -12,7 +12,7 @@ datasource db {
 
 model Student {
     id          Int          @id @default(autoincrement())
-    studentid   String       @unique
+    netid       String       @unique
     name        String
     major       String?
     graduation  DateTime
@@ -30,13 +30,13 @@ model Class {
 }
 
 model Enrollment {
-    student   Student  @relation(fields: [studentId], references: [id])
-    studentId Int
-    class     Class    @relation(fields: [classId], references: [id])
-    classId   Int
-    grade     String?
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    student    Student  @relation(fields: [student_id], references: [id])
+    student_id Int
+    class      Class    @relation(fields: [class_id], references: [id])
+    class_id   Int
+    grade      String?
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
 
-    @@id([studentId, classId])
+    @@id([student_id, class_id])
 }

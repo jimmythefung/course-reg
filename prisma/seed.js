@@ -42,19 +42,19 @@ const list_of_classes = [
 
 const list_of_students = [
     {
-        studentid: "aa2024",
+        netid: "aa2024",
         name: "Alice",
         major: "Accounting",
         graduation: "2024-05-20T00:00:00.000Z",
     },
     {
-        studentid: "bb2025",
+        netid: "bb2025",
         name: "Bob",
         major: "Biology",
         graduation: "2024-05-20T00:00:00.000Z",
     },
     {
-        studentid: "jj2026",
+        netid: "jj2026",
         name: "Jane",
         major: "Journalism",
         graduation: "2024-05-20T00:00:00.000Z",
@@ -82,10 +82,10 @@ async function main() {
     const collection_student = await prisma.$transaction(
         list_of_students.map((s) =>
             prisma.student.upsert({
-                where: { studentid: s.studentid },
+                where: { netid: s.netid },
                 update: {},
                 create: {
-                    studentid: s.studentid,
+                    netid: s.netid,
                     name: s.name,
                     major: s.major,
                     graduation: s.graduation,
@@ -97,11 +97,11 @@ async function main() {
     // A student with Relation to enrollment
     const s1 = await prisma.student.upsert({
         where: {
-            studentid: "jf1128",
+            netid: "jf1128",
         },
         update: {},
         create: {
-            studentid: "jf1128",
+            netid: "jf1128",
             name: "Jimmy",
             major: "Physics",
             graduation: "2024-05-20T00:00:00.000Z",

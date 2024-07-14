@@ -7,7 +7,7 @@ export const student_columns = [
     },
     {
         label: "NetID",
-        accessor: "studentid",
+        accessor: "netid",
         sortable: true,
         sortbyOrder: "desc",
     },
@@ -55,13 +55,13 @@ export const class_columns = [
 export const enrollment_columns = [
     {
         label: "Student",
-        accessor: "studentId",
+        accessor: "student_id",
         sortable: true,
         sortbyOrder: "desc",
     },
     {
         label: "Class",
-        accessor: "classId",
+        accessor: "class_id",
         sortable: true,
         sortbyOrder: "desc",
     },
