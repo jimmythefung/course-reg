@@ -29,21 +29,31 @@ export default function Home() {
         fetch("/api/v1/enrollment")
             .then((res) => res.json())
             .then((data) => {
-                const extractedData = data.map((x) => {
-                    return {
-                        id: Number(x.student_id) + "_" + Number(x.class_id),
-                        student_id: x.student_id,
-                        class_id: x.class_id,
-                        grade: x.grade ? x.grade : "TBD",
-                        name: x.student.name,
-                        netid: x.student.netid,
-                        title: x.class.name,
-                        code: x.class.code,
-                    };
-                });
-                setEnrollment(extractedData);
+                setEnrollment(normalize_enrollment(data));
                 setLoading(false);
             });
+        // let s = [];
+        // let c = [];
+        // let e = [];
+        // fetch("/api/v1/student")
+        //     .then((res) => res.json())
+        //     .then((data) => {
+        //         s = data;
+        //     });
+        // fetch("/api/v1/class")
+        //     .then((res) => res.json())
+        //     .then((data) => {
+        //         c = data;
+        //     });
+        // fetch("/api/v1/enrollment")
+        //     .then((res) => res.json())
+        //     .then((data) => {
+        //         e = data;
+        //         setLoading(false);
+        //     });
+        // setStudents(s);
+        // setClasses(c);
+        // setEnrollment(normalize_enrollment(e));
     }, []);
 
     if (isLoading) return <p>Loading...</p>;
@@ -68,4 +78,20 @@ export default function Home() {
             />
         </main>
     );
+}
+
+function normalize_enrollment(data) {
+    const enrollmentData = data.map((x) => {
+        return {
+            id: Number(x.student_id) + "_" + Number(x.class_id),
+            student_id: x.student_id,
+            class_id: x.class_id,
+            grade: x.grade ? x.grade : "TBD",
+            name: x.student.name,
+            netid: x.student.netid,
+            title: x.class.name,
+            code: x.class.code,
+        };
+    });
+    return enrollmentData;
 }
