@@ -6,34 +6,52 @@ const prisma = new PrismaClient();
 // HTTP Methods
 /////////////////
 export async function GET() {
-    const enrollments = await prisma.enrollment.findMany();
+    const enrollments = await prisma.enrollment.findMany({
+        include: {
+            student: true,
+            class: true,
+        },
+    });
     console.log("Get request: all enrollments.");
     return Response.json(enrollments);
 }
 
 export async function POST(req) {
     const json_data = await req.json();
-    // Extract netid, class_id
-    const netid = json_data.netid;
-    const courseCode = json_data.code;
+    const student_id = Number(json_data.student_id);
+    const class_id = Number(json_data.class_id);
+    const grade = json_data.grade;
     console.log(
-        "Create enrollment request: net_id=" + netid + ", code=" + courseCode
+        "Create enrollment request: student_id=" +
+            student_id +
+            ", class_id=" +
+            class_id +
+            ", grade=" +
+            grade
     );
 
     // Enroll
-    const enroll = await prisma.student.update({
-        where: { netid: netid },
-        data: {
-            enrollments: {
-                create: [
-                    {
-                        class: {
-                            connect: {
-                                code: courseCode,
-                            },
-                        },
-                    },
-                ],
+    const enroll = await prisma.enrollment.upsert({
+        where: {
+            student_id_class_id: {
+                student_id: student_id,
+                class_id: class_id,
+            },
+        },
+        update: {
+            grade: grade,
+        },
+        create: {
+            grade: grade,
+            student: {
+                connect: {
+                    id: student_id,
+                },
+            },
+            class: {
+                connect: {
+                    id: class_id,
+                },
             },
         },
     });

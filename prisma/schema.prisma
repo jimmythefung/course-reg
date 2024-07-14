@@ -30,13 +30,11 @@ model Class {
 }
 
 model Enrollment {
-    student    Student  @relation(fields: [student_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+    student    Student @relation(fields: [student_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
     student_id Int
-    class      Class    @relation(fields: [class_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+    class      Class   @relation(fields: [class_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
     class_id   Int
     grade      String?
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @updatedAt
 
     @@id([student_id, class_id])
 }

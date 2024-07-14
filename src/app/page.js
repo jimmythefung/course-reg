@@ -29,7 +29,18 @@ export default function Home() {
         fetch("/api/v1/enrollment")
             .then((res) => res.json())
             .then((data) => {
-                setEnrollment(data);
+                const extractedData = data.map((x) => {
+                    return {
+                        student_id: x.student_id,
+                        class_id: x.class_id,
+                        grade: x.grade ? x.grade : "TBD",
+                        name: x.student.name,
+                        netid: x.student.netid,
+                        title: x.class.name,
+                        code: x.class.code,
+                    };
+                });
+                setEnrollment(extractedData);
                 setLoading(false);
             });
     }, []);

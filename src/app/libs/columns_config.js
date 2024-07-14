@@ -55,13 +55,25 @@ export const class_columns = [
 export const enrollment_columns = [
     {
         label: "Student",
-        accessor: "student_id",
+        accessor: "name",
+        sortable: true,
+        sortbyOrder: "desc",
+    },
+    {
+        label: "NetID",
+        accessor: "netid",
         sortable: true,
         sortbyOrder: "desc",
     },
     {
         label: "Class",
-        accessor: "class_id",
+        accessor: "title",
+        sortable: true,
+        sortbyOrder: "desc",
+    },
+    {
+        label: "Code",
+        accessor: "code",
         sortable: true,
         sortbyOrder: "desc",
     },
