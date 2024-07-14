@@ -1,6 +1,11 @@
 import { useState } from "react";
 
-export default function Body({ columns, tableData, setTableData }) {
+export default function Body({
+    columns,
+    tableData,
+    setTableData,
+    handleRemove,
+}) {
     const [editCell, setEditCell] = useState({});
     const handleChange = (inputValue, accessor) => {
         const newDataState = [...tableData];

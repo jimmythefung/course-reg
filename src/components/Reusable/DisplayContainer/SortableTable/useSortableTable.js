@@ -6,7 +6,7 @@ export const useSortableTable = (data, columns) => {
     );
 
     const handleSorting = (sortField, sortOrder) => {
-        console.log(tableData)
+        console.log(tableData);
         if (sortField) {
             const sorted = [...tableData].sort((a, b) => {
                 if (a[sortField] === null) return 1;
@@ -24,7 +24,11 @@ export const useSortableTable = (data, columns) => {
         }
     };
 
-    return [tableData, setTableData, handleSorting];
+    const handleRemove = (id) => {
+        console.log("Handling remove for row id: " + id.toString());
+    };
+
+    return [tableData, setTableData, handleSorting, handleRemove];
 };
 
 function getDefaultSorting(defaultTableData, columns) {
