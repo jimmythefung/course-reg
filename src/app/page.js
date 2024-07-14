@@ -40,19 +40,19 @@ export default function Home() {
     return (
         <main className={styles.main}>
             <SortableTable
-                caption={"List of students"}
                 data={studentsData}
                 columns={student_columns}
+                caption={"List of students"}
             />
             <SortableTable
-                caption={"List of classes"}
                 data={classesData}
                 columns={class_columns}
+                caption={"List of classes"}
             />
             <SortableTable
-                caption={"List of enrollment"}
                 data={enrollmentsData}
                 columns={enrollment_columns}
+                caption={"List of enrollment"}
             />
         </main>
     );

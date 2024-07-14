@@ -1,13 +1,13 @@
 .main {
     /* border: 3px solid black; */
-    /* background-color: grey; */
-    /* height: 100vh; */
+    background-color: grey;
+    height: 100vh;
 }
 
-.student_table {
-    border: 3px solid darkgreen;
-}
-
-.class_table {
-    border: 3px solid red;
+.main > table {
+    border: 1px solid;
+    padding: 1rem;
+    width: 70%;
+    table-layout: fixed;
+    text-align: left;
 }
