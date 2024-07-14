@@ -1,6 +1,5 @@
 "use server";
 import { PrismaClient } from "@prisma/client";
-import { NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 /////////////////
@@ -8,20 +7,33 @@ const prisma = new PrismaClient();
 /////////////////
 export async function GET() {
     const classes = await prisma.class.findMany();
-    console.log(classes);
+    console.log("Get request: all classes");
     return Response.json(classes);
+}
+
+export async function POST(req) {
+    const json_data = await req.json();
+    console.log("Create class request: " + json_data.code);
+
+    // Create new class
+    const newClass = await prisma.class.upsert({
+        where: { code: json_data.code },
+        update: {},
+        create: {
+            code: json_data.code,
+            name: json_data.name,
+            subject: json_data.subject,
+            capacity: json_data.capacity,
+            term: json_data.term,
+        },
+    });
+    return Response.json(newClass);
 }
 
 export async function DELETE(request) {
     const searchParams = request.nextUrl.searchParams;
     const code = searchParams.get("code");
-
-    const data = {
-        param: {
-            code: code,
-        },
-    };
-    console.log(data);
+    console.log("Delete class request: " + code);
 
     const deleteCourse = await prisma.class.delete({
         where: {

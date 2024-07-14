@@ -1,4 +1,5 @@
 endpoint=http://localhost:3000
 path=/api/v1/enrollment
 URL=$endpoint$path
-curl -H "Content-Type: application/json" --data @enroll.json $URL
+param="?student_id=6&class_id=6"
+curl -X "DELETE" $URL$param

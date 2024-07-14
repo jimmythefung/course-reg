@@ -42,21 +42,33 @@ const list_of_classes = [
 
 const list_of_students = [
     {
-        netid: "aa2024",
         name: "Alice",
-        major: "Accounting",
+        netid: "aa1001",
+        major: "Astronomy",
         graduation: "2024-05-20T00:00:00.000Z",
     },
     {
-        netid: "bb2025",
         name: "Bob",
+        netid: "bb1002",
         major: "Biology",
         graduation: "2024-05-20T00:00:00.000Z",
     },
     {
-        netid: "jj2026",
+        name: "Cindy",
+        netid: "cc1003",
+        major: "Chemistry",
+        graduation: "2024-05-20T00:00:00.000Z",
+    },
+    {
+        name: "Dave",
+        netid: "dd1004",
+        major: "Drama",
+        graduation: "2024-05-20T00:00:00.000Z",
+    },
+    {
         name: "Jane",
-        major: "Journalism",
+        netid: "jj1005",
+        major: "Japanese",
         graduation: "2024-05-20T00:00:00.000Z",
     },
 ];

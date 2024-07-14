@@ -1,5 +1,5 @@
 endpoint=http://localhost:3000
-path=/api/v1/class
+path=/api/v1/student
 URL=$endpoint$path
-param="?code=01:640:491"
+param="?netid=kk2024"
 curl -X "DELETE" $URL$param
