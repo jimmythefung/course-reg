@@ -30,6 +30,10 @@ export default function Home() {
         capacity: 30,
         term: "",
     });
+    const [newEnrollmentData, setNewEnrollment] = useState({
+        student_id: "",
+        class_id: "",
+    });
 
     useEffect(() => {
         fetch("/api/v1/student")
@@ -67,12 +71,9 @@ export default function Home() {
                                     "Content-Type": "application/json",
                                 },
                                 body: JSON.stringify(data),
-                            })
-                                .then((res) => res.json())
-                                .then((result) => {
-                                    result["remove"] = "X";
-                                    setStudents((prev) => [...prev, result]);
-                                });
+                            }).then((res) => {
+                                window.location.reload();
+                            });
                         }}
                     />
                 </div>
@@ -98,12 +99,9 @@ export default function Home() {
                                     "Content-Type": "application/json",
                                 },
                                 body: JSON.stringify(data),
-                            })
-                                .then((res) => res.json())
-                                .then((result) => {
-                                    result["remove"] = "X";
-                                    setClasses((prev) => [...prev, result]);
-                                });
+                            }).then((res) => {
+                                window.location.reload();
+                            });
                         }}
                     />
                 </div>
@@ -116,12 +114,32 @@ export default function Home() {
             </div>
         ),
         Enrollment: (
-            <SortableTable
-                data={enrollmentsData}
-                columns={enrollment_columns}
-                caption={"List of enrollment"}
-                tableType={"enrollment"}
-            />
+            <div>
+                <div className={styles.entry_form}>
+                    <EditableKVForm
+                        kvData={newEnrollmentData}
+                        changeHandler={setNewEnrollment}
+                        keysAllowedToUpdate={Object.keys(newEnrollmentData)}
+                        submitHandler={(data) => {
+                            fetch("/api/v1/enrollment", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify(data),
+                            }).then((res) => {
+                                window.location.reload();
+                            });
+                        }}
+                    />
+                </div>
+                <SortableTable
+                    data={enrollmentsData}
+                    columns={enrollment_columns}
+                    caption={"List of enrollment"}
+                    tableType={"enrollment"}
+                />
+            </div>
         ),
     };
 
