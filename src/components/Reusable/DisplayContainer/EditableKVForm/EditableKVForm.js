@@ -14,7 +14,7 @@ export default function EditableKVForm({
             <input
                 className={styles.updateButton}
                 type="button"
-                value="Update"
+                value="Submit"
                 onClick={(e) => {
                     submitHandler(data);
                 }}

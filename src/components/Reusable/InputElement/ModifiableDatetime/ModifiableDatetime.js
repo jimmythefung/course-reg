@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./ModifiableDatetime.module.css";
-import * as timeutil from "@/libs/timeutils";
+import * as timeutil from "@/app/libs/timeutils";
 
 export default function ModifiableDatetime({
     title = "",
