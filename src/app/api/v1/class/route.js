@@ -30,11 +30,27 @@ export async function POST(req) {
     return Response.json(newClass);
 }
 
+export async function PUT(request) {
+    const json_data = await request.json();
+    const searchParams = request.nextUrl.searchParams;
+    const class_id = searchParams.get("class_id");
+    console.log("Update class request: " + class_id);
+
+    const updateClass = await prisma.class.update({
+        where: {
+            id: Number(class_id),
+        },
+        data: { ...json_data },
+    });
+
+    return Response.json(updateClass);
+}
+
 export async function DELETE(request) {
     const searchParams = request.nextUrl.searchParams;
     const class_id = searchParams.get("class_id");
     const code = searchParams.get("code");
-    
+
     // Delete by course code
     if (code != null) {
         console.log("Delete class request: " + code);

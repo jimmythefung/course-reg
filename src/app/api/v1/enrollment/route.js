@@ -58,6 +58,31 @@ export async function POST(req) {
     return Response.json(enroll);
 }
 
+export async function PUT(request) {
+    const json_data = await request.json();
+    const searchParams = request.nextUrl.searchParams;
+    const student_id = Number(searchParams.get("student_id"));
+    const class_id = Number(searchParams.get("class_id"));
+    console.log(
+        "Update enrollment (grade) request: student_id=" +
+            student_id +
+            ", class_id=" +
+            class_id
+    );
+
+    const updateEnrollment = await prisma.enrollment.update({
+        where: {
+            student_id_class_id: {
+                student_id: student_id,
+                class_id: class_id,
+            },
+        },
+        data: { ...json_data },
+    });
+
+    return Response.json(updateEnrollment);
+}
+
 export async function DELETE(request) {
     const searchParams = request.nextUrl.searchParams;
     const student_id = Number(searchParams.get("student_id"));

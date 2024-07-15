@@ -74,7 +74,78 @@ export const useSortableTable = (data, columns, tableType) => {
         }
     };
 
-    return [tableData, setTableData, handleSorting, handleRemove];
+    const handleUpdate = (id, field, value) => {
+        console.log(
+            "Handling Update for id: " + id.toString() + " in " + tableType
+        );
+        if (tableType === "student") {
+            fetch("/api/v1/student?student_id=" + id.toString(), {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ [field]: value }),
+            }).then((res) => {
+                if (res.ok) {
+                    setTableData(
+                        tableData.map((row) =>
+                            row.id === id ? { ...row, [field]: value } : row
+                        )
+                    );
+                }
+            });
+        }
+
+        if (tableType === "class") {
+            fetch("/api/v1/class?class_id=" + id.toString(), {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ [field]: value }),
+            }).then((res) => {
+                if (res.ok) {
+                    setTableData(
+                        tableData.map((row) =>
+                            row.id === id ? { ...row, [field]: value } : row
+                        )
+                    );
+                }
+            });
+        }
+
+        if (tableType === "enrollment") {
+            const student_id = id.split("_")[0];
+            const class_id = id.split("_")[1];
+            fetch(
+                "/api/v1/enrollment?student_id=" +
+                    student_id.toString() +
+                    "&" +
+                    "class_id=" +
+                    class_id.toString(),
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ [field]: value }),
+                }
+            ).then((res) => {
+                if (res.ok) {
+                    setTableData(
+                        tableData.map((row) =>
+                            row.student_id === Number(student_id) &&
+                            row.class_id === Number(class_id)
+                                ? { ...row, [field]: value }
+                                : row
+                        )
+                    );
+                }
+            });
+        }
+    };
+
+    return [tableData, setTableData, handleSorting, handleRemove, handleUpdate];
 };
 
 function getDefaultSorting(defaultTableData, columns) {

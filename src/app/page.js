@@ -10,12 +10,15 @@ import {
 } from "./libs/columns_config";
 import EditableKVForm from "@/components/Reusable/DisplayContainer/EditableKVForm/EditableKVForm";
 import { getCurrentDatetimeLocal } from "./libs/timeutils";
+import ModifiableDropdown from "@/components/Reusable/InputElement/ModifiableDropdown/ModifiableDropdown";
 
 export default function Home() {
     const [studentsData, setStudents] = useState(null);
     const [classesData, setClasses] = useState(null);
     const [enrollmentsData, setEnrollment] = useState(null);
     const [isLoading, setLoading] = useState(true);
+
+    const [selectedNetId, setSelectedNetId] = useState("");
 
     const [newStudentData, setNewStudent] = useState({
         netid: "",
@@ -83,6 +86,27 @@ export default function Home() {
                     caption={"List of students"}
                     tableType={"student"}
                 />
+                <div className={styles.details}>
+                    <h1>
+                        Student Enrollment:{" "}
+                        <ModifiableDropdown
+                            changeHandler={(netid) => {
+                                console.log("Selected netid: ", netid);
+                                setSelectedNetId(netid);
+                            }}
+                            choiceList={studentsData.map((s) => {
+                                return s.netid;
+                            })}
+                            displayvalue={selectedNetId}
+                        />
+                    </h1>
+                    <SortableTable
+                        data={enrollmentsData.filter((x) => x.netid === selectedNetId)}
+                        columns={enrollment_columns}
+                        caption={"List of enrollment"}
+                        tableType={"enrollment"}
+                    />
+                </div>
             </div>
         ),
         Classes: (

@@ -5,6 +5,7 @@ export default function Body({
     tableData,
     setTableData,
     handleRemove,
+    handleUpdate,
 }) {
     const [editCell, setEditCell] = useState({});
     const handleChange = (inputValue, accessor) => {
@@ -27,7 +28,9 @@ export default function Body({
                                 return (
                                     <td key={accessor}>
                                         <button
-                                            onClick={() => handleRemove(data.id)}
+                                            onClick={() =>
+                                                handleRemove(data.id)
+                                            }
                                         >
                                             Remove
                                         </button>
@@ -61,7 +64,11 @@ export default function Body({
                                                     accessor
                                                 )
                                             }
-                                            onBlur={() => setEditCell({})}
+                                            onBlur={() => {
+                                                handleUpdate(editCell.id, editCell.accessor, tData);
+                                                console.log(editCell.id, editCell.accessor, tData)
+                                                setEditCell({});
+                                            }}
                                             autoFocus
                                         />
                                     ) : (

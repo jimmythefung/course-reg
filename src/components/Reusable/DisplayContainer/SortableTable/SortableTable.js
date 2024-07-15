@@ -3,7 +3,7 @@ import Head from "./Head";
 import { useSortableTable } from "./useSortableTable";
 
 export default function SortableTable({ data, columns, caption, tableType }) {
-    const [tableData, setTableData, handleSorting, handleRemove] =
+    const [tableData, setTableData, handleSorting, handleRemove, handleUpdate] =
         useSortableTable(data, columns, tableType);
 
     return (
@@ -15,6 +15,7 @@ export default function SortableTable({ data, columns, caption, tableType }) {
                 tableData={tableData}
                 setTableData={setTableData}
                 handleRemove={handleRemove}
+                handleUpdate={handleUpdate}
             />
         </table>
     );

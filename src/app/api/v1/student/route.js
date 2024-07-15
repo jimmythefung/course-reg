@@ -29,6 +29,22 @@ export async function POST(req) {
     return Response.json(newStudent);
 }
 
+export async function PUT(request) {
+    const json_data = await request.json();
+    const searchParams = request.nextUrl.searchParams;
+    const student_id = searchParams.get("student_id");
+    console.log("Update student request: " + student_id);
+
+    const updateStudent = await prisma.student.update({
+        where: {
+            id: Number(student_id),
+        },
+        data: { ...json_data },
+    });
+
+    return Response.json(updateStudent);
+}
+
 export async function DELETE(request) {
     const searchParams = request.nextUrl.searchParams;
     const student_id = searchParams.get("student_id");
