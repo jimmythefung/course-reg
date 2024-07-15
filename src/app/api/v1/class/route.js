@@ -32,12 +32,25 @@ export async function POST(req) {
 
 export async function DELETE(request) {
     const searchParams = request.nextUrl.searchParams;
+    const class_id = searchParams.get("class_id");
     const code = searchParams.get("code");
-    console.log("Delete class request: " + code);
+    
+    // Delete by course code
+    if (code != null) {
+        console.log("Delete class request: " + code);
+        const deleteCourse = await prisma.class.delete({
+            where: {
+                code: code,
+            },
+        });
+        return Response.json(deleteCourse);
+    }
 
+    // Delete by class_id
+    console.log("Delete class_id request: " + class_id);
     const deleteCourse = await prisma.class.delete({
         where: {
-            code: code,
+            id: Number(class_id),
         },
     });
 

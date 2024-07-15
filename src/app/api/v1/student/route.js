@@ -31,14 +31,27 @@ export async function POST(req) {
 
 export async function DELETE(request) {
     const searchParams = request.nextUrl.searchParams;
+    const student_id = searchParams.get("student_id");
     const netid = searchParams.get("netid");
-    console.log("Delete class request: " + netid);
+    console.log("Delete student request: " + student_id);
 
-    const deleteCourse = await prisma.student.delete({
+    // Delete by netid
+    if (netid != null) {
+        console.log("Delete student by netid request: " + netid);
+        const deleteStudent = await prisma.student.delete({
+            where: {
+                netid: netid,
+            },
+        });
+        return Response.json(deleteStudent);
+    }
+
+    // Delete by student_id
+    const deleteStudent = await prisma.student.delete({
         where: {
-            netid: netid,
+            id: Number(student_id),
         },
     });
 
-    return Response.json(deleteCourse);
+    return Response.json(deleteStudent);
 }

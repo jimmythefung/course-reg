@@ -23,6 +23,17 @@ export default function Body({
                 return (
                     <tr key={data.id}>
                         {columns.map(({ accessor }) => {
+                            if (accessor === "remove") {
+                                return (
+                                    <td key={accessor}>
+                                        <button
+                                            onClick={() => handleRemove(data.id)}
+                                        >
+                                            Remove
+                                        </button>
+                                    </td>
+                                );
+                            }
                             const isEditing =
                                 editCell.id === data.id &&
                                 editCell.accessor === accessor;

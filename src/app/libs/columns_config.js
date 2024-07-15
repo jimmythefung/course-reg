@@ -23,6 +23,11 @@ export const student_columns = [
         sortable: true,
         sortbyOrder: "desc",
     },
+    {
+        label: "Remove",
+        accessor: "remove",
+        sortable: false,
+    },
 ];
 
 export const class_columns = [
@@ -49,6 +54,11 @@ export const class_columns = [
         accessor: "term",
         sortable: true,
         sortbyOrder: "desc",
+    },
+    {
+        label: "Remove",
+        accessor: "remove",
+        sortable: false,
     },
 ];
 
@@ -82,5 +92,10 @@ export const enrollment_columns = [
         accessor: "grade",
         sortable: true,
         sortbyOrder: "desc",
+    },
+    {
+        label: "Remove",
+        accessor: "remove",
+        sortable: false,
     },
 ];

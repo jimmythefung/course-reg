@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useSortableTable = (data, columns) => {
+export const useSortableTable = (data, columns, tableType) => {
     const [tableData, setTableData] = useState(
         getDefaultSorting(data, columns)
     );
@@ -25,7 +25,53 @@ export const useSortableTable = (data, columns) => {
     };
 
     const handleRemove = (id) => {
-        console.log("Handling remove for row id: " + id.toString());
+        console.log(
+            "Handling remove for id: " + id.toString() + " in " + tableType
+        );
+        if (tableType === "student") {
+            fetch("/api/v1/student?student_id=" + id.toString(), {
+                method: "DELETE",
+            }).then((res) => {
+                if (res.ok) {
+                    setTableData(tableData.filter((row) => row.id !== id));
+                }
+            });
+        }
+
+        if (tableType === "class") {
+            fetch("/api/v1/class?class_id=" + id.toString(), {
+                method: "DELETE",
+            }).then((res) => {
+                if (res.ok) {
+                    setTableData(tableData.filter((row) => row.id !== id));
+                }
+            });
+        }
+
+        if (tableType === "enrollment") {
+            const student_id = id.split("_")[0];
+            const class_id = id.split("_")[1];
+            fetch(
+                "/api/v1/enrollment?student_id=" +
+                    student_id.toString() +
+                    "&" +
+                    "class_id=" +
+                    class_id.toString(),
+                {
+                    method: "DELETE",
+                }
+            ).then((res) => {
+                if (res.ok) {
+                    setTableData(
+                        tableData.filter(
+                            (row) =>
+                                row.student_id !== student_id &&
+                                row.class_id !== class_id
+                        )
+                    );
+                }
+            });
+        }
     };
 
     return [tableData, setTableData, handleSorting, handleRemove];

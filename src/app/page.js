@@ -19,12 +19,12 @@ export default function Home() {
         fetch("/api/v1/student")
             .then((res) => res.json())
             .then((data) => {
-                setStudents(data);
+                setStudents(add_remove_column(data));
             });
         fetch("/api/v1/class")
             .then((res) => res.json())
             .then((data) => {
-                setClasses(data);
+                setClasses(add_remove_column(data));
             });
         fetch("/api/v1/enrollment")
             .then((res) => res.json())
@@ -32,28 +32,6 @@ export default function Home() {
                 setEnrollment(normalize_enrollment(data));
                 setLoading(false);
             });
-        // let s = [];
-        // let c = [];
-        // let e = [];
-        // fetch("/api/v1/student")
-        //     .then((res) => res.json())
-        //     .then((data) => {
-        //         s = data;
-        //     });
-        // fetch("/api/v1/class")
-        //     .then((res) => res.json())
-        //     .then((data) => {
-        //         c = data;
-        //     });
-        // fetch("/api/v1/enrollment")
-        //     .then((res) => res.json())
-        //     .then((data) => {
-        //         e = data;
-        //         setLoading(false);
-        //     });
-        // setStudents(s);
-        // setClasses(c);
-        // setEnrollment(normalize_enrollment(e));
     }, []);
 
     if (isLoading) return <p>Loading...</p>;
@@ -65,19 +43,28 @@ export default function Home() {
                 data={studentsData}
                 columns={student_columns}
                 caption={"List of students"}
+                tableType={"student"}
             />
             <SortableTable
                 data={classesData}
                 columns={class_columns}
                 caption={"List of classes"}
+                tableType={"class"}
             />
             <SortableTable
                 data={enrollmentsData}
                 columns={enrollment_columns}
                 caption={"List of enrollment"}
+                tableType={"enrollment"}
             />
         </main>
     );
+}
+
+function add_remove_column(data) {
+    return data.map((x) => {
+        return { ...x, remove: "X" };
+    });
 }
 
 function normalize_enrollment(data) {
@@ -91,6 +78,7 @@ function normalize_enrollment(data) {
             netid: x.student.netid,
             title: x.class.name,
             code: x.class.code,
+            remove: "X",
         };
     });
     return enrollmentData;
