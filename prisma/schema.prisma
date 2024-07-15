@@ -34,7 +34,7 @@ model Enrollment {
     student_id Int
     class      Class   @relation(fields: [class_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
     class_id   Int
-    grade      String?
+    grade      String  @default("TBD")
 
     @@id([student_id, class_id])
 }

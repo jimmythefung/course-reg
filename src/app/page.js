@@ -18,7 +18,8 @@ export default function Home() {
     const [enrollmentsData, setEnrollment] = useState(null);
     const [isLoading, setLoading] = useState(true);
 
-    const [selectedNetId, setSelectedNetId] = useState("");
+    const [selectedNetid, setSelectedNetid] = useState("");
+    const [selectedCode, setSelectedCode] = useState("");
 
     const [newStudentData, setNewStudent] = useState({
         netid: "",
@@ -59,6 +60,7 @@ export default function Home() {
 
     if (isLoading) return <p>Loading...</p>;
     if (!studentsData) return <p>No student data</p>;
+
     const tabAndContentTable = {
         Students: (
             <div>
@@ -92,20 +94,15 @@ export default function Home() {
                         <ModifiableDropdown
                             changeHandler={(netid) => {
                                 console.log("Selected netid: ", netid);
-                                setSelectedNetId(netid);
+                                setSelectedNetid(netid);
                             }}
                             choiceList={studentsData.map((s) => {
                                 return s.netid;
                             })}
-                            displayvalue={selectedNetId}
+                            displayvalue={selectedNetid}
                         />
                     </h1>
-                    <SortableTable
-                        data={enrollmentsData.filter((x) => x.netid === selectedNetId)}
-                        columns={enrollment_columns}
-                        caption={"List of enrollment"}
-                        tableType={"enrollment"}
-                    />
+                    {enrollment_table_by_netid(enrollmentsData, selectedNetid)}
                 </div>
             </div>
         ),
@@ -135,6 +132,22 @@ export default function Home() {
                     caption={"List of classes"}
                     tableType={"class"}
                 />
+                <div className={styles.details}>
+                    <h1>
+                        Enrollment by class:{" "}
+                        <ModifiableDropdown
+                            changeHandler={(code) => {
+                                console.log("Selected code: ", code);
+                                setSelectedCode(code);
+                            }}
+                            choiceList={classesData.map((c) => {
+                                return c.code;
+                            })}
+                            displayvalue={selectedCode}
+                        />
+                    </h1>
+                    {enrollment_table_by_code(enrollmentsData, selectedCode)}
+                </div>
             </div>
         ),
         Enrollment: (
@@ -186,7 +199,7 @@ function normalize_enrollment(data) {
             id: Number(x.student_id) + "_" + Number(x.class_id),
             student_id: x.student_id,
             class_id: x.class_id,
-            grade: x.grade ? x.grade : "TBD",
+            grade: x.grade,
             name: x.student.name,
             netid: x.student.netid,
             title: x.class.name,
@@ -195,4 +208,64 @@ function normalize_enrollment(data) {
         };
     });
     return enrollmentData;
+}
+
+function enrollment_table_by_netid(enrollmentsData, netid) {
+    const tableData = enrollmentsData.filter((x) => x.netid === netid);
+    if (tableData.length === 0) {
+        return <p>No enrollment data</p>;
+    }
+    return (
+        <table className={styles.table}>
+            <caption>List of enrollment</caption>
+            <thead>
+                <tr>
+                    {Object.keys(tableData[0]).map((key) => {
+                        return <th key={key}>{key}</th>;
+                    })}
+                </tr>
+            </thead>
+            <tbody>
+                {tableData.map((row) => {
+                    return (
+                        <tr key={row.id}>
+                            {Object.keys(row).map((key) => {
+                                return <td key={key}>{row[key]}</td>;
+                            })}
+                        </tr>
+                    );
+                })}
+            </tbody>
+        </table>
+    );
+}
+
+function enrollment_table_by_code(enrollmentsData, code) {
+    const tableData = enrollmentsData.filter((x) => x.code === code);
+    if (tableData.length === 0) {
+        return <p>No enrollment data</p>;
+    }
+    return (
+        <table className={styles.table}>
+            <caption>List of enrollment</caption>
+            <thead>
+                <tr>
+                    {Object.keys(tableData[0]).map((key) => {
+                        return <th key={key}>{key}</th>;
+                    })}
+                </tr>
+            </thead>
+            <tbody>
+                {tableData.map((row) => {
+                    return (
+                        <tr key={row.id}>
+                            {Object.keys(row).map((key) => {
+                                return <td key={key}>{row[key]}</td>;
+                            })}
+                        </tr>
+                    );
+                })}
+            </tbody>
+        </table>
+    );
 }

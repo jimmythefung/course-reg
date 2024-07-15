@@ -1,8 +1,6 @@
 .main {
-    /* border: 3px solid black; */
-    background-color: black;
-    color: white;
-    height: 100vh;
+    padding: 1rem;
+    margin: 1rem;
 }
 
 .main table {

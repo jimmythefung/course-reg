@@ -20,7 +20,7 @@ export async function POST(req) {
     const json_data = await req.json();
     const student_id = Number(json_data.student_id);
     const class_id = Number(json_data.class_id);
-    const grade = json_data.grade;
+    const grade = json_data.grade? json_data.grade : "TBD";
     console.log(
         "Create enrollment request: student_id=" +
             student_id +
