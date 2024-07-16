@@ -31,6 +31,24 @@ export default function Home() {
     const [selectedCode, setSelectedCode] = useState("");
     const [enrollmentDataByCode, setEnrollmentDataByCode] = useState(null);
 
+    // Search params for student
+    const [studentSearch, setStudentSearch] = useState({
+        text: "",
+        columnChoiceList: [],
+        valueChoiceList: [],
+        selectedColumn: "",
+        selectedValue: "",
+    });
+
+    // Search params for class
+    const [classSearch, setClassSearch] = useState({
+        text: "",
+        columnChoiceList: [],
+        valueChoiceList: [],
+        selectedColumn: "",
+        selectedValue: "",
+    });
+
     // Form data for new entry of student, class, and enrollment
     const [newStudentData, setNewStudent] = useState({
         netid: "",
@@ -58,6 +76,25 @@ export default function Home() {
                 setOriginalStudents(add_remove_column(data));
                 setStudents(add_remove_column(data));
                 setSelectedNetid(data[0].netid);
+
+                // Search params for student
+                setStudentSearch((prev) => {
+                    const newColumnList = Object.keys(data[0]).slice(1, 5);
+                    const newValueList = [
+                        ...new Set(
+                            data.map((s) => {
+                                return s[newColumnList[0]];
+                            })
+                        ),
+                    ];
+                    return {
+                        ...prev,
+                        columnChoiceList: newColumnList,
+                        valueChoiceList: newValueList,
+                        selectedColumn: newColumnList[0],
+                        selectedValue: newValueList[0],
+                    };
+                });
             });
         fetch("/api/v1/class")
             .then((res) => res.json())
@@ -65,6 +102,25 @@ export default function Home() {
                 setOriginalClasses(add_remove_column(data));
                 setClasses(add_remove_column(data));
                 setSelectedCode(data[0].code);
+
+                // Search params for class
+                setClassSearch((prev) => {
+                    const newColumnList = Object.keys(data[0]).slice(1, 5);
+                    const newValueList = [
+                        ...new Set(
+                            data.map((s) => {
+                                return s[newColumnList[0]];
+                            })
+                        ),
+                    ];
+                    return {
+                        ...prev,
+                        columnChoiceList: newColumnList,
+                        valueChoiceList: newValueList,
+                        selectedColumn: newColumnList[0],
+                        selectedValue: newValueList[0],
+                    };
+                });
             });
         fetch("/api/v1/enrollment")
             .then((res) => res.json())
@@ -99,18 +155,65 @@ export default function Home() {
                         }}
                     />
                 </div>
-                <ModifiableText
-                    textTitle="Search for student"
-                    changeHandler={(text) => {
-                        setStudents(
-                            originalStudents.filter((s) =>
-                                s.name
-                                    .toLowerCase()
-                                    .includes(text.toLowerCase())
-                            )
-                        );
-                    }}
-                />
+                <div className="search_and_filter">
+                    <ModifiableText
+                        textTitle="Search for student"
+                        changeHandler={(text) => {
+                            setStudents(
+                                originalStudents.filter((s) =>
+                                    s.name
+                                        .toLowerCase()
+                                        .includes(text.toLowerCase())
+                                )
+                            );
+                        }}
+                    />
+                    <ModifiableDropdown
+                        title="Filter Column By"
+                        choiceList={studentSearch.columnChoiceList}
+                        displayvalue={studentSearch.selectedColumn}
+                        changeHandler={(column) => {
+                            const newValueList = [
+                                ...new Set(
+                                    studentsData.map((s) => {
+                                        return s[column];
+                                    })
+                                ),
+                            ];
+                            setStudentSearch({
+                                ...studentSearch,
+                                selectedColumn: column,
+                                valueChoiceList: newValueList,
+                                selectedValue: newValueList[0],
+                            });
+                        }}
+                    />
+                    <ModifiableDropdown
+                        title="Values"
+                        choiceList={studentSearch.valueChoiceList}
+                        displayvalue={studentSearch.selectedValue}
+                        changeHandler={(value) => {
+                            setStudentSearch({
+                                ...studentSearch,
+                                selectedValue: value,
+                            });
+                            setStudents(
+                                originalStudents.filter(
+                                    (s) =>
+                                        s[studentSearch.selectedColumn] ===
+                                        value
+                                )
+                            );
+                        }}
+                    />
+                    <button
+                        onClick={() => {
+                            setStudents(originalStudents);
+                        }}
+                    >
+                        Reset
+                    </button>
+                </div>
                 <SortableTable
                     data={studentsData}
                     columns={student_columns}
@@ -169,18 +272,64 @@ export default function Home() {
                         }}
                     />
                 </div>
-                <ModifiableText
-                    textTitle="Search for class"
-                    changeHandler={(text) => {
-                        setClasses(
-                            originalClasses.filter((c) =>
-                                c.name
-                                    .toLowerCase()
-                                    .includes(text.toLowerCase())
-                            )
-                        );
-                    }}
-                />
+                <div className="search_and_filter">
+                    <ModifiableText
+                        textTitle="Search for class"
+                        changeHandler={(text) => {
+                            setClasses(
+                                originalClasses.filter((c) =>
+                                    c.name
+                                        .toLowerCase()
+                                        .includes(text.toLowerCase())
+                                )
+                            );
+                        }}
+                    />
+                    <ModifiableDropdown
+                        title="Filter Column By"
+                        choiceList={classSearch.columnChoiceList}
+                        displayvalue={classSearch.selectedColumn}
+                        changeHandler={(column) => {
+                            const newValueList = [
+                                ...new Set(
+                                    classesData.map((c) => {
+                                        return c[column];
+                                    })
+                                ),
+                            ];
+                            setClassSearch({
+                                ...classSearch,
+                                selectedColumn: column,
+                                valueChoiceList: newValueList,
+                                selectedValue: newValueList[0],
+                            });
+                        }}
+                    />
+                    <ModifiableDropdown
+                        title="Values"
+                        choiceList={classSearch.valueChoiceList}
+                        displayvalue={classSearch.selectedValue}
+                        changeHandler={(value) => {
+                            setClassSearch({
+                                ...classSearch,
+                                selectedValue: value,
+                            });
+                            setClasses(
+                                originalClasses.filter(
+                                    (c) =>
+                                        c[classSearch.selectedColumn] === value
+                                )
+                            );
+                        }}
+                    />
+                    <button
+                        onClick={() => {
+                            setClasses(originalClasses);
+                        }}
+                    >
+                        Reset
+                    </button>
+                </div>
                 <SortableTable
                     data={classesData}
                     columns={class_columns}
