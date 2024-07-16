@@ -224,7 +224,7 @@ export default function Home() {
                     <h1>
                         Student Enrollment:{" "}
                         <ModifiableDropdown
-                            choiceList={studentsData.map((s) => {
+                            choiceList={originalStudents.map((s) => {
                                 return s.netid;
                             })}
                             displayvalue={selectedNetid}
@@ -340,7 +340,7 @@ export default function Home() {
                     <h1>
                         Enrollment by class:{" "}
                         <ModifiableDropdown
-                            choiceList={classesData.map((c) => {
+                            choiceList={originalClasses.map((c) => {
                                 return c.code;
                             })}
                             displayvalue={selectedCode}
