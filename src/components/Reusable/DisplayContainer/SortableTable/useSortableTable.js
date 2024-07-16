@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const useSortableTable = (data, columns, tableType) => {
-    const [tableData, setTableData] = useState(
-        getDefaultSorting(data, columns)
-    );
+    const [tableData, setTableData] = useState(data);
+    useEffect(() => {
+        setTableData(getDefaultSorting(data, columns));
+    }, [data, columns]);
 
     const handleSorting = (sortField, sortOrder) => {
         console.log(tableData);
@@ -149,7 +150,8 @@ export const useSortableTable = (data, columns, tableType) => {
 };
 
 function getDefaultSorting(defaultTableData, columns) {
-    const sorted = [...defaultTableData].sort((a, b) => {
+    const copied = [...defaultTableData];
+    const sorted = copied.sort((a, b) => {
         const filterColumn = columns.filter((column) => column.sortbyOrder);
 
         // Merge all array objects into single object and extract accessor and sortbyOrder keys

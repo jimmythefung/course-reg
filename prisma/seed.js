@@ -131,7 +131,62 @@ async function main() {
         },
     });
 
-    console.log({ s1 });
+    // Enroll Alice in all courses
+    const alice_enrollments = await prisma.$transaction(
+        collection_classes.map((c) =>
+            prisma.enrollment.upsert({
+                where: {
+                    student_id_class_id: {
+                        student_id: collection_student[0].id,
+                        class_id: c.id,
+                    },
+                },
+                update: {},
+                create: {
+                    grade: "TBD",
+                    student: {
+                        connect: {
+                            id: collection_student[0].id,
+                        },
+                    },
+                    class: {
+                        connect: {
+                            id: c.id,
+                        },
+                    },
+                },
+            })
+        )
+    );
+
+    // Enroll all students in one course
+    const enrollments = await prisma.$transaction(
+        collection_student.map((s) =>
+            prisma.enrollment.upsert({
+                where: {
+                    student_id_class_id: {
+                        student_id: s.id,
+                        class_id: collection_classes[0].id,
+                    },
+                },
+                update: {},
+                create: {
+                    grade: "TBD",
+                    student: {
+                        connect: {
+                            id: s.id,
+                        },
+                    },
+                    class: {
+                        connect: {
+                            id: collection_classes[0].id,
+                        },
+                    },
+                },
+            })
+        )
+    );
+    console.log("Seeding completed.");
 }
 
 // execute the main function
