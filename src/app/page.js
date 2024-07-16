@@ -11,18 +11,27 @@ import {
 import EditableKVForm from "@/components/Reusable/DisplayContainer/EditableKVForm/EditableKVForm";
 import { getCurrentDatetimeLocal } from "./libs/timeutils";
 import ModifiableDropdown from "@/components/Reusable/InputElement/ModifiableDropdown/ModifiableDropdown";
+import ModifiableText from "@/components/Reusable/InputElement/ModifiableText/ModifiableText";
 
 export default function Home() {
+    // Original list to be filter down for render
+    const [originalStudents, setOriginalStudents] = useState(null);
+    const [originalClasses, setOriginalClasses] = useState(null);
+    const [originalEnrollments, setOriginalEnrollments] = useState(null);
+
+    // For table rendering
     const [studentsData, setStudents] = useState(null);
     const [classesData, setClasses] = useState(null);
     const [enrollmentsData, setEnrollment] = useState(null);
     const [isLoading, setLoading] = useState(true);
 
+    // One-to-many table for students and classes
     const [selectedNetid, setSelectedNetid] = useState("");
     const [enrollmentDataByNetid, setEnrollmentDataByNetid] = useState(null);
     const [selectedCode, setSelectedCode] = useState("");
     const [enrollmentDataByCode, setEnrollmentDataByCode] = useState(null);
 
+    // Form data for new entry of student, class, and enrollment
     const [newStudentData, setNewStudent] = useState({
         netid: "",
         name: "",
@@ -46,18 +55,21 @@ export default function Home() {
         fetch("/api/v1/student")
             .then((res) => res.json())
             .then((data) => {
+                setOriginalStudents(add_remove_column(data));
                 setStudents(add_remove_column(data));
                 setSelectedNetid(data[0].netid);
             });
         fetch("/api/v1/class")
             .then((res) => res.json())
             .then((data) => {
+                setOriginalClasses(add_remove_column(data));
                 setClasses(add_remove_column(data));
                 setSelectedCode(data[0].code);
             });
         fetch("/api/v1/enrollment")
             .then((res) => res.json())
             .then((data) => {
+                setOriginalEnrollments(normalize_enrollment(data));
                 setEnrollment(normalize_enrollment(data));
                 setLoading(false);
             });
@@ -87,6 +99,18 @@ export default function Home() {
                         }}
                     />
                 </div>
+                <ModifiableText
+                    textTitle="Search for student"
+                    changeHandler={(text) => {
+                        setStudents(
+                            originalStudents.filter((s) =>
+                                s.name
+                                    .toLowerCase()
+                                    .includes(text.toLowerCase())
+                            )
+                        );
+                    }}
+                />
                 <SortableTable
                     data={studentsData}
                     columns={student_columns}
@@ -145,6 +169,18 @@ export default function Home() {
                         }}
                     />
                 </div>
+                <ModifiableText
+                    textTitle="Search for class"
+                    changeHandler={(text) => {
+                        setClasses(
+                            originalClasses.filter((c) =>
+                                c.name
+                                    .toLowerCase()
+                                    .includes(text.toLowerCase())
+                            )
+                        );
+                    }}
+                />
                 <SortableTable
                     data={classesData}
                     columns={class_columns}

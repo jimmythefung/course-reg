@@ -50,6 +50,12 @@ export const class_columns = [
         sortbyOrder: "desc",
     },
     {
+        label: "Capacity",
+        accessor: "capacity",
+        sortable: true,
+        sortbyOrder: "desc",
+    },
+    {
         label: "Term",
         accessor: "term",
         sortable: true,
