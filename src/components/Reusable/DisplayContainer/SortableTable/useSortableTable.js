@@ -66,8 +66,10 @@ export const useSortableTable = (data, columns, tableType) => {
                     setTableData(
                         tableData.filter(
                             (row) =>
-                                row.student_id !== Number(student_id) &&
-                                row.class_id !== Number(class_id)
+                                !(
+                                    row.student_id === Number(student_id) &&
+                                    row.class_id === Number(class_id)
+                                )
                         )
                     );
                 }
