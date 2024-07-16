@@ -3,6 +3,12 @@
 Rutgers full stack demo
 
 # Helpful Commands
+## Jest Testing
+Run with:  
+```bash
+# Jest tests are located in `./__test__`.  
+npm run test
+```
 
 ## Prisma
 

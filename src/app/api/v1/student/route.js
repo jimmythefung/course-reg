@@ -32,9 +32,23 @@ export async function POST(req) {
 export async function PUT(request) {
     const json_data = await request.json();
     const searchParams = request.nextUrl.searchParams;
+    const netid = searchParams.get("netid");
     const student_id = searchParams.get("student_id");
     console.log("Update student request: " + student_id);
 
+    // Update by netid
+    if (netid != null) {
+        console.log("Update student by netid request: " + netid);
+        const updateStudent = await prisma.student.update({
+            where: {
+                netid: netid,
+            },
+            data: { ...json_data },
+        });
+        return Response.json(updateStudent);
+    }
+
+    // Update by student_id
     const updateStudent = await prisma.student.update({
         where: {
             id: Number(student_id),
