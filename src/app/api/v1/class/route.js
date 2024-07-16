@@ -34,8 +34,22 @@ export async function PUT(request) {
     const json_data = await request.json();
     const searchParams = request.nextUrl.searchParams;
     const class_id = searchParams.get("class_id");
+    const code = searchParams.get("code");
     console.log("Update class request: " + class_id);
 
+    // Update by code
+    if (code != null) {
+        console.log("Update class by code request: " + code);
+        const updateClass = await prisma.class.update({
+            where: {
+                code: code,
+            },
+            data: { ...json_data },
+        });
+        return Response.json(updateClass);
+    }
+
+    // Update by class_id
     const updateClass = await prisma.class.update({
         where: {
             id: Number(class_id),

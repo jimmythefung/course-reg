@@ -2,6 +2,9 @@
 
 Rutgers full stack demo
 
+# Walkthrough
+
+
 # Helpful Commands
 ## Jest Testing
 Run with:  
