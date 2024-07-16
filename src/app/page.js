@@ -15,21 +15,21 @@ import ModifiableText from "@/components/Reusable/InputElement/ModifiableText/Mo
 
 export default function Home() {
     // Original list to be filter down for render
-    const [originalStudents, setOriginalStudents] = useState(null);
-    const [originalClasses, setOriginalClasses] = useState(null);
-    const [originalEnrollments, setOriginalEnrollments] = useState(null);
+    const [originalStudents, setOriginalStudents] = useState([]);
+    const [originalClasses, setOriginalClasses] = useState([]);
+    const [originalEnrollments, setOriginalEnrollments] = useState([]);
 
     // For table rendering
-    const [studentsData, setStudents] = useState(null);
-    const [classesData, setClasses] = useState(null);
-    const [enrollmentsData, setEnrollment] = useState(null);
+    const [studentsData, setStudents] = useState([]);
+    const [classesData, setClasses] = useState([]);
+    const [enrollmentsData, setEnrollment] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
     // One-to-many table for students and classes
     const [selectedNetid, setSelectedNetid] = useState("");
-    const [enrollmentDataByNetid, setEnrollmentDataByNetid] = useState(null);
+    const [enrollmentDataByNetid, setEnrollmentDataByNetid] = useState([]);
     const [selectedCode, setSelectedCode] = useState("");
-    const [enrollmentDataByCode, setEnrollmentDataByCode] = useState(null);
+    const [enrollmentDataByCode, setEnrollmentDataByCode] = useState([]);
 
     // Search params for student
     const [studentSearch, setStudentSearch] = useState({
@@ -239,7 +239,7 @@ export default function Home() {
                             }}
                         />
                     </h1>
-                    {enrollmentDataByNetid !== null ? (
+                    {enrollmentDataByNetid.length !== 0 ? (
                         <SortableTable
                             data={enrollmentDataByNetid}
                             columns={enrollment_columns}
@@ -355,7 +355,7 @@ export default function Home() {
                             }}
                         />
                     </h1>
-                    {enrollmentDataByCode !== null ? (
+                    {enrollmentDataByCode.length !== 0 ? (
                         <SortableTable
                             data={enrollmentDataByCode}
                             columns={enrollment_columns}

@@ -52,7 +52,9 @@ Each student has the following fields
     - by using the submission form
 7. Update student
     - by editing cell in-line
+    - Update Jane's major to Astronomy
     - autosaved on de-focus
+    - Try filter by major to Astronomy
 
 ## Classes Tab
 
