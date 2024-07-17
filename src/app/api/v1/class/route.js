@@ -23,7 +23,7 @@ export async function POST(req) {
             code: json_data.code,
             name: json_data.name,
             subject: json_data.subject,
-            capacity: json_data.capacity,
+            capacity: Number(json_data.capacity),
             term: json_data.term,
         },
     });

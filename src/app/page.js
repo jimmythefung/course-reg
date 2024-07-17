@@ -362,7 +362,7 @@ export default function Home() {
                             caption={
                                 "Students enrolled in course: " + selectedCode
                             }
-                            tableType={"class"}
+                            tableType={"enrollment"}
                         />
                     ) : (
                         "No enrollment data for " + selectedCode
